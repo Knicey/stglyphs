@@ -6,7 +6,11 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of stglpyhs is to …
+This project is being developed as part of Google Summer of Code (GSOC) 2024 and expands upon the kind of glyphs that can be represented in glyph maps currently implemented in the [cubble](https://github.com/huizezhang-sherry/cubble) package.
+
+Information about GSOC can be found [here](https://summerofcode.withgoogle.com/)
+
+The basic project details can be found [here](https://github.com/rstats-gsoc/gsoc2024/wiki/glyph-map-for-visualizing-spatio%E2%80%90temporal-data)
 
 ## Installation
 
