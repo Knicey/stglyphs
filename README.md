@@ -6,6 +6,8 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
+A package which adds glyph map features to represent spatio-temporal data in ggplot2.
+
 This project is being developed as part of Google Summer of Code (GSOC) 2024 and expands upon the kind of glyphs that can be represented in glyph maps currently implemented in the [cubble](https://github.com/huizezhang-sherry/cubble) package.
 
 Information about GSOC can be found [here](https://summerofcode.withgoogle.com/)
