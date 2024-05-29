@@ -14,3 +14,6 @@ Suggests:
 Config/testthat/edition: 3
 Imports: 
     stringr
+Depends: 
+    R (>= 2.10)
+LazyData: true
