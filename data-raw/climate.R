@@ -2,6 +2,45 @@ library(tidyverse)
 library(lubridate)
 library(janitor)
 
+# devtools::install_github("ropensci/rnoaa")
+
+library(rnoaa)
+
+
+# aus_stations <- ghcnd_stations() |>
+#   filter(str_starts(id, "ASN")) |>
+#   filter(last_year >= 2020) |>
+#   mutate(wmo_id = as.numeric(wmo_id),
+#          name = str_to_lower(name)) |>
+#   select(-state, -gsn_flag) |>
+#   filter(element %in% c("PRCP", "TMAX", "TMIN")) |>
+#   nest(element: last_year) |>
+#   rowwise() |>
+#   filter(nrow(data) == 3) |>
+#   select(-data) |>
+#   filter(id != "ASN00079105")
+#
+# aus_climate_raw <- aus_stations |>
+#   rowwise() |>
+#   mutate(ts = list(meteo_pull_monitors(
+#     monitors = id, var = c("PRCP", "TMAX", "TMIN"),
+#     date_min = "2020-01-01",
+#     date_max = "2020-12-31") |>
+#       select(-id))) |>
+#   rename(lat = latitude, long = longitude, elev = elevation)
+
+station_data <- ghcnd_stations() |>
+  filter(id %in% c("USC00406328", "USW00023169", "USW00013722", "USW00092811")) |>
+  filter(element %in% c("PRCP", "TMAX", "TMIN"))
+
+station_data_raw <- station_data |>
+  rowwise() |>
+  mutate(ts = list(meteo_pull_monitors(
+    monitors = id, var = c("PRCP", "TMAX", "TMIN"),
+    date_min = "2020-01-01",
+    date_max = "2020-12-31") |>
+      select(-id))) |>
+  rename(lat = latitude, long = longitude, elev = elevation)
 
 #Near the Himalayas
 shiquanhe <- read_csv("data/NOAA/CHM00055228.csv")
