@@ -15,7 +15,7 @@ station_data_raw <- station_data |>
       select(-id))) |>
   rename(lat = latitude, long = longitude, elev = elevation)
 
-clean <- station_data_raw |>
+stations <- station_data_raw |>
   select(id, long, lat, elev, name, wmo_id, ts) |>
   unnest(ts) |>
   mutate(
@@ -24,13 +24,6 @@ clean <- station_data_raw |>
     date = ymd(date),
     month = month(date),
     year = year(date)
-  )
-
-stations <- clean |>
-  group_by(month, name) |>
-  summarise(
-    avgmin = mean(tmin, na.rm = TRUE) / 10,
-    avgmax = mean(tmax, na.rm = TRUE) / 10
   )
 
 usethis::use_data(stations, overwrite = TRUE)

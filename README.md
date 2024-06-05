@@ -4,15 +4,11 @@
 # stglpyhs
 
 <!-- badges: start -->
+
+[![R-CMD-check](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-A package which adds glyph map features to represent spatio-temporal data in ggplot2.
-
-This project is being developed as part of Google Summer of Code (GSOC) 2024 and expands upon the kind of glyphs that can be represented in glyph maps currently implemented in the [cubble](https://github.com/huizezhang-sherry/cubble) package.
-
-Information about GSOC can be found [here](https://summerofcode.withgoogle.com/)
-
-The basic project details can be found [here](https://github.com/rstats-gsoc/gsoc2024/wiki/glyph-map-for-visualizing-spatio%E2%80%90temporal-data)
+The goal of stglpyhs is to …
 
 ## Installation
 
@@ -30,7 +26,23 @@ This is a basic example which shows you how to solve a common problem:
 
 ``` r
 library(stglpyhs)
-## basic example code
+
+grouped <- stations |>
+  group_by(month, name) |>
+  summarise(
+    avgmin = mean(tmin, na.rm = TRUE),
+    avgmax = mean(tmax, na.rm = TRUE)
+)
+#TODO: Accommodate for XEND aesthetic (required in geom_segment)
+ggplot(data = grouped) +
+  #geom_sf(data = xxx, aes(x = long, y = lat, color = name) +
+  geom_segment_glyph(aes(
+    x_major = long, 
+    y_major = lat, 
+    x_minor = month, 
+    y_minor_start = start, 
+    y_minor_end = end)
+    ) 
 ```
 
 What is special about using `README.Rmd` instead of just `README.md`?

@@ -6,7 +6,14 @@ library(janitor)
 
 load("./data/stations.rda")
 
-ggplot(data = stations) +
+grouped <- stations |>
+  group_by(month, name) |>
+  summarise(
+    avgmin = mean(tmin, na.rm = TRUE),
+    avgmax = mean(tmax, na.rm = TRUE)
+)
+
+ggplot(data = grouped) +
   geom_segment(aes(x = factor(month), xend = factor(month), y = avgmin, yend = avgmax)) +
   theme_bw() +
   labs(
