@@ -1,9 +1,9 @@
 #' Create a glyph map
 #'
-#' @param string A character vector with, at most, one element.
+#' @param string A dataframe with the fields: name, month, avgmin, and avgmax.
 #' @inheritParams stringr::str_split
 #'
-#' @return A character vector.
+#' @return A ggplot object.
 #' @export
 #'
 #' @examples
