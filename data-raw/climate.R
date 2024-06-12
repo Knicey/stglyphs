@@ -4,8 +4,6 @@ library(janitor)
 
 # devtools::install_github("ropensci/rnoaa")
 
-load("./data/stations.rda")
-
 grouped <- stations |>
   group_by(month, name) |>
   summarise(
