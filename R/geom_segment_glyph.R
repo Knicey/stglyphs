@@ -5,7 +5,7 @@
 #' @title GeomSegmentGlyph
 #' @return description
 
-GeomSegmentGlyph <- ggproto("GeomSegmentGlyph", GeomPolygon,
+GeomSegmentGlyph <- ggproto("GeomSegmentGlyph", GeomSegment,
                              default_aes = aes(
                                colour = "black",
                                fill = NA,

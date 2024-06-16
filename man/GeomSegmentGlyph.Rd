@@ -5,7 +5,7 @@
 \alias{GeomSegmentGlyph}
 \title{GeomSegmentGlyph}
 \format{
-An object of class \code{GeomSegmentGlyph} (inherits from \code{GeomPolygon}, \code{Geom}, \code{ggproto}, \code{gg}) of length 2.
+An object of class \code{GeomSegmentGlyph} (inherits from \code{GeomSegment}, \code{Geom}, \code{ggproto}, \code{gg}) of length 2.
 }
 \usage{
 GeomSegmentGlyph
