@@ -5,6 +5,28 @@
 #' @title GeomSegmentGlyph
 #' @return description
 
+geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
+                               position = "identity", ..., x_major = NULL,
+                               x_minor = NULL, y_major = NULL, y_minor = NULL,
+                               yend_minor = NULL, width = ggplot2::rel(2.1),
+                               height = ggplot2::rel(2.1), show.legend = NA,
+                               inherit.aes = TRUE) {
+  ggplot2::layer(
+    data = data,
+    mapping = mapping,
+    stat = stat,
+    geom = GeomSegmentGlyph,
+    position = position,
+    show.legend = show.legend,
+    inherit.aes = inherit.aes,
+    params = list(
+      width = width,
+      height = height,
+      ...
+    )
+  )
+}
+
 GeomSegmentGlyph <- ggproto(
   "GeomSegmentGlyph",
   ggplot2::GeomSegment,
@@ -16,7 +38,6 @@ GeomSegmentGlyph <- ggproto(
   draw_panel = function(data, panel_params, coord, ...) {
     ggplot2:::GeomPath$draw_panel(data, panel_params, coord, ...)
   },
-
 
   required_aes = c("x_major", "y_major", "x_minor", "y_minor", "yend_minor"),
   default_aes = aes(
@@ -32,10 +53,24 @@ GeomSegmentGlyph <- ggproto(
 
 
 glyph_data_setup <- function(data, params){
-  data <- data %>%
-    dplyr::mutate(
-      x_minor = x_scale(.data$x_minor)
-    )
-  data
+
+  if (has_scale(params$x_scale)) {
+    x_scale <- get_scale(params$x_scale)
+    data <-
+      data |>
+      dplyr::mutate(
+        x_minor = x_scale(.data$x_minor)
+      )
+  }
+
+  datetime_class <- c(
+    "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
+  if (any(class(data$x_minor) %in% datetime_class)){
+    data[["x_minor"]] <- as.numeric(data[["x_minor"]])
+  }
+
+  data |> dplyr::ungroup()
+
+
 }
 
