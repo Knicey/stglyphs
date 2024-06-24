@@ -54,9 +54,16 @@ GeomSegmentGlyph <- ggproto(
 
 glyph_data_setup <- function(data, params){
 
-  x <- data$x_major + data$x_minor * params$width
-  y1 <- data$y_major + data$y_minor * params$height
-  y2 <- data$y_major + data$yend_minor * params$height
+  # x = s_x + a_x * w * t
+  # y1 = s_y + a_y * h * z1
+  # y2 = s_y + a_y * h * z2
+  # s_x and s_y are scaling factors
+  a_x = 1
+  a_y = 1
+
+  x <- data$x_major + a_x * data$x_minor * params$width
+  y1 <- data$y_major + a_y * data$y_minor * params$height
+  y2 <- data$y_major + a_y * data$yend_minor * params$height
 
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
