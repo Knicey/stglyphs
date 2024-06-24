@@ -54,14 +54,9 @@ GeomSegmentGlyph <- ggproto(
 
 glyph_data_setup <- function(data, params){
 
-  if (has_scale(params$x_scale)) {
-    x_scale <- get_scale(params$x_scale)
-    data <-
-      data |>
-      dplyr::mutate(
-        x_minor = x_scale(.data$x_minor)
-      )
-  }
+  x <- data$x_major + data$x_minor * params$width
+  y1 <- data$y_major + data$y_minor * params$height
+  y2 <- data$y_major + data$yend_minor * params$height
 
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
