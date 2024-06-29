@@ -54,6 +54,8 @@ GeomSegmentGlyph <- ggproto(
 
 glyph_data_setup <- function(data, params){
 
+  #Group Aesthetic Needed? Uses and Functionality?
+
   # x = s_x + a_x * w * t
   # y1 = s_y + a_y * h * z1
   # y2 = s_y + a_y * h * z2
@@ -61,17 +63,16 @@ glyph_data_setup <- function(data, params){
   a_x = 1
   a_y = 1
 
-  x <- data$x_major + a_x * data$x_minor * params$width
-  y1 <- data$y_major + a_y * data$y_minor * params$height
-  y2 <- data$y_major + a_y * data$yend_minor * params$height
+  x <- data$x_major + a_x * params$width * data$x_minor
+  xend <- x
+  y <- data$y_major + a_y * params$height * data$y_minor
+  yend <- data$y_major + a_y * params$height * data$yend_minor
 
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
   if (any(class(data$x_minor) %in% datetime_class)){
     data[["x_minor"]] <- as.numeric(data[["x_minor"]])
   }
-
-  data |> dplyr::ungroup()
 
 
 }
