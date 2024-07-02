@@ -33,10 +33,12 @@ GeomSegmentGlyph <- ggproto(
 
   setup_data = function(data, params) {
     data <- glyph_data_setup(data, params)
+    return(data)
   },
 
   draw_panel = function(data, panel_params, coord, ...) {
-    ggplot2:::GeomPath$draw_panel(data, panel_params, coord, ...)
+    print("Data in draw_panel:")
+    ggplot2:::GeomSegment$draw_panel(data, panel_params, coord, ...)
   },
 
   required_aes = c("x_major", "y_major", "x_minor", "y_minor", "yend_minor"),
@@ -63,16 +65,28 @@ glyph_data_setup <- function(data, params){
   a_x = 1
   a_y = 1
 
+  browser()
+
   x <- data$x_major + a_x * params$width * data$x_minor
   xend <- x
   y <- data$y_major + a_y * params$height * data$y_minor
   yend <- data$y_major + a_y * params$height * data$yend_minor
+
+  data$x <- x
+  data$xend <- xend
+  data$y <- y
+  data$yend <- yend
+
+  browser()
 
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
   if (any(class(data$x_minor) %in% datetime_class)){
     data[["x_minor"]] <- as.numeric(data[["x_minor"]])
   }
+
+  #print(data)
+  return(data)
 
 
 }
