@@ -47,6 +47,7 @@ grouped <- stations |>
 ggplot(data = grouped) +
   geom_sf(data = mainland_us, color = "white") +
   ggthemes::theme_map() +
+  geom_point(aes(x = long, y = lat)) +
   geom_segment_glyph(aes(
     x_major = long, 
     y_major = lat, 
