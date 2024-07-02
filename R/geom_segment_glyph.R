@@ -38,6 +38,7 @@ GeomSegmentGlyph <- ggproto(
 
   draw_panel = function(data, panel_params, coord, ...) {
     print("Data in draw_panel:")
+    print(data)
     ggplot2:::GeomSegment$draw_panel(data, panel_params, coord, ...)
   },
 
@@ -47,7 +48,8 @@ GeomSegmentGlyph <- ggproto(
     linewidth = 0.5,
     linetype = 1,
     width = ggplot2::rel(2.1),
-    height = ggplot2::rel(2.1)
+    height = ggplot2::rel(2.1),
+    alpha = 1
 
   ),
 
@@ -62,10 +64,10 @@ glyph_data_setup <- function(data, params){
   # y1 = s_y + a_y * h * z1
   # y2 = s_y + a_y * h * z2
   # s_x and s_y are scaling factors
-  a_x = 1
-  a_y = 1
+  a_x = 0.15
+  a_y = 0.08
 
-  browser()
+  #browser()
 
   x <- data$x_major + a_x * params$width * data$x_minor
   xend <- x
@@ -77,7 +79,7 @@ glyph_data_setup <- function(data, params){
   data$y <- y
   data$yend <- yend
 
-  browser()
+  #browser()
 
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
