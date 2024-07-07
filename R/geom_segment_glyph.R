@@ -68,18 +68,18 @@ glyph_data_setup <- function(data, params){
   a_y = 0.08
 
   #browser()
-  #data <- data |>
-  #  group_by(data$name) |>
-  #  mutate(
-  #    data$y_minor <- (data$y_minor - mean(data$y_minor))/sd(data$y_minor),
-  #    data$yend_minor <- (data$yend_minor - mean(data$yend_minor))/sd(data$yend_minor)
-#
-  #  )
+  data <- data |>
+    group_by(data$name) |>
+    mutate(
+      data$y_minor <- (data$y_minor - mean(data$y_minor))/sd(data$y_minor),
+      data$yend_minor <- (data$yend_minor - mean(data$yend_minor))/sd(data$yend_minor)
+
+    )
 
   x <- data$x_major + a_x * params$width * data$x_minor
   xend <- x
   y <- data$y_major + a_y * params$height * data$y_minor
-  yend <- data$y_major + a_y * params$height * data$yend_minor
+  yend <- data$y_major - a_y * params$height * data$yend_minor
 
   data$x <- x
   data$xend <- xend
