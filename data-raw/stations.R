@@ -3,7 +3,19 @@ library(tidyverse)
 library(rnoaa)
 
 station_data <- ghcnd_stations() |>
-  filter(id %in% c("USC00406328", "USW00023169", "USW00013722", "USW00092811")) |>
+  filter(id %in% c(
+    "USC00406328",
+    "USW00023169",
+    "USW00013722",
+    "USW00092811",
+    "USW00003947",
+    "USW00024233",
+    "USW00024018",
+    "USW00013960",
+    "USW00094728",
+    "USW00013717",
+    "USW00093197"
+    )) |>
   filter(element %in% c("PRCP", "TMAX", "TMIN"))
 
 station_data_raw <- station_data |>

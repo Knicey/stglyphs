@@ -1,7 +1,9 @@
 #' NOAA Weather Station Data
 #'
 #' A subset of data from NOAA weather stations in the United States.
-#' Selected stations include:
+#' Selected stations include: MIAMI BEACH, MT LECONTE, RALEIGH AP,
+#' KANSAS CITY INTL AP, MCCARRAN INTL AP, CHEYENNE, NY CITY CNTRL PARK
+#' SANTA MONICA MUNI AP and SEATTLE TACOMA AP
 #'
 #' @format ## `stations`
 #' A data frame with 17,253 rows and 12 columns:
