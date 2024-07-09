@@ -72,32 +72,45 @@ glyph_data_setup <- function(data, params){
   a_x = 0.15
   a_y = 0.08
 
-  #browser()
-  #data <- data |>
-  #  group_by(data$name) |>
-  #  mutate(
-  #    #y_minor = (y_minor - mean(y_minor))/sd(y_minor),
-  #    #yend_minor = (yend_minor - mean(yend_minor))/sd(yend_minor),
-  #  )
+  browser()
+  data <- data |>
+    group_by(data$name) |>
+    mutate(
+      x_offset = (max(data$x_minor) + min(data$x_minor))/2,
+      y_offset = (max(data$yend_minor) - max(data$y_minor))/2,
+    )
 
   x_offset = (max(data$x_minor) + min(data$x_minor))/2
 
-  y_offset = (max(data$yend_minor) - max(data$y_minor))/2
+  #y_offset = (max(data$yend_minor) - max(data$y_minor))/2
 
   #browser()
 
-  x <- data$x_major + params$a_x * params$width * (data$x_minor - x_offset)
+  x <- data$x_major + params$a_x * params$width * (data$x_minor - data$x_offset)
   xend <- x
-  y <- data$y_major + params$a_y * params$height * (data$y_minor + y_offset)
-  yend <- data$y_major - a_y * params$height * (data$yend_minor - y_offset)
+  y <- data$y_major + params$a_y * params$height * (data$y_minor + data$y_offset)
+  yend <- data$y_major - params$a_y * params$height * (data$yend_minor - data$y_offset)
 
   data$x <- x
   data$xend <- xend
   data$y <- y
   data$yend <- yend
 
-  #browser()
 
+  #Find the largest y value above y_major and scale everything based on that being 1
+  data <- data |>
+    group_by(x_major, y_major) |>
+    mutate(
+      scale_factor = max(y) - y_major
+    ) |>
+    ungroup() |>
+    mutate(
+      y = ((y - y_major)/scale_factor) + y_major,
+      yend = y_major - ((y_major - yend)/scale_factor),
+    )
+
+
+  browser()
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
   if (any(class(data$x_minor) %in% datetime_class)){
