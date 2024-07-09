@@ -77,12 +77,14 @@ glyph_data_setup <- function(data, params){
 
   x_offset = (max(data$x_minor) + min(data$x_minor))/2
 
+  y_offset = (max(data$yend_minor) - max(data$y_minor))/2
+
   browser()
 
   x <- data$x_major + a_x * params$width * (data$x_minor - x_offset)
   xend <- x
-  y <- data$y_major + a_y * params$height * data$y_minor
-  yend <- data$y_major - a_y * params$height * data$yend_minor
+  y <- data$y_major + a_y * params$height * (data$y_minor + y_offset)
+  yend <- data$y_major - a_y * params$height * (data$yend_minor - y_offset)
 
   data$x <- x
   data$xend <- xend
