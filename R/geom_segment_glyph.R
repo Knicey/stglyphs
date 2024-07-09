@@ -68,15 +68,18 @@ glyph_data_setup <- function(data, params){
   a_y = 0.08
 
   #browser()
-  data <- data |>
-    group_by(data$name) |>
-    mutate(
-      data$y_minor <- (data$y_minor - mean(data$y_minor))/sd(data$y_minor),
-      data$yend_minor <- (data$yend_minor - mean(data$yend_minor))/sd(data$yend_minor)
+  #data <- data |>
+  #  group_by(data$name) |>
+  #  mutate(
+  #    #y_minor = (y_minor - mean(y_minor))/sd(y_minor),
+  #    #yend_minor = (yend_minor - mean(yend_minor))/sd(yend_minor),
+  #  )
 
-    )
+  x_offset = (max(data$x_minor) + min(data$x_minor))/2
 
-  x <- data$x_major + a_x * params$width * data$x_minor
+  browser()
+
+  x <- data$x_major + a_x * params$width * (data$x_minor - x_offset)
   xend <- x
   y <- data$y_major + a_y * params$height * data$y_minor
   yend <- data$y_major - a_y * params$height * data$yend_minor
@@ -86,7 +89,7 @@ glyph_data_setup <- function(data, params){
   data$y <- y
   data$yend <- yend
 
-  #browser()
+  browser()
 
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
