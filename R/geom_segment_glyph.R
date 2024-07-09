@@ -9,7 +9,8 @@ geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
                                position = "identity", ..., x_major = NULL,
                                x_minor = NULL, y_major = NULL, y_minor = NULL,
                                yend_minor = NULL, width = ggplot2::rel(2.1),
-                               height = ggplot2::rel(2.1), show.legend = NA,
+                               height = ggplot2::rel(2.1), a_x = 0.15,
+                               a_y = 0.08, show.legend = NA,
                                inherit.aes = TRUE) {
   ggplot2::layer(
     data = data,
@@ -22,6 +23,8 @@ geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
     params = list(
       width = width,
       height = height,
+      a_x = a_x,
+      a_y = a_y,
       ...
     )
   )
@@ -49,6 +52,8 @@ GeomSegmentGlyph <- ggproto(
     linetype = 1,
     width = ggplot2::rel(2.1),
     height = ggplot2::rel(2.1),
+    a_x = 0.15,
+    a_y = 0.08,
     alpha = 1
 
   ),
@@ -79,11 +84,11 @@ glyph_data_setup <- function(data, params){
 
   y_offset = (max(data$yend_minor) - max(data$y_minor))/2
 
-  browser()
+  #browser()
 
-  x <- data$x_major + a_x * params$width * (data$x_minor - x_offset)
+  x <- data$x_major + params$a_x * params$width * (data$x_minor - x_offset)
   xend <- x
-  y <- data$y_major + a_y * params$height * (data$y_minor + y_offset)
+  y <- data$y_major + params$a_y * params$height * (data$y_minor + y_offset)
   yend <- data$y_major - a_y * params$height * (data$yend_minor - y_offset)
 
   data$x <- x
@@ -91,7 +96,7 @@ glyph_data_setup <- function(data, params){
   data$y <- y
   data$yend <- yend
 
-  browser()
+  #browser()
 
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
