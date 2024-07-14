@@ -8,9 +8,8 @@
 geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
                                position = "identity", ..., x_major = NULL,
                                x_minor = NULL, y_major = NULL, y_minor = NULL,
-                               yend_minor = NULL, width = ggplot2::rel(2.1),
-                               height = ggplot2::rel(2.1), a_x = 0.15,
-                               a_y = 0.08, show.legend = NA,
+                               yend_minor = NULL, width = 0.5,
+                               height = 2.1, show.legend = NA,
                                inherit.aes = TRUE) {
   ggplot2::layer(
     data = data,
@@ -23,8 +22,6 @@ geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
     params = list(
       width = width,
       height = height,
-      a_x = a_x,
-      a_y = a_y,
       ...
     )
   )
@@ -50,10 +47,8 @@ GeomSegmentGlyph <- ggproto(
     colour = "black",
     linewidth = 0.5,
     linetype = 1,
-    width = ggplot2::rel(2.1),
-    height = ggplot2::rel(2.1),
-    a_x = 0.15,
-    a_y = 0.08,
+    width = 0.5,
+    height = 2,
     alpha = 1
 
   ),
@@ -69,8 +64,6 @@ glyph_data_setup <- function(data, params){
   # y1 = s_y + a_y * h * z1
   # y2 = s_y + a_y * h * z2
   # s_x and s_y are scaling factors
-  a_x = 0.15
-  a_y = 0.08
 
   browser()
   data <- data |>
@@ -86,10 +79,10 @@ glyph_data_setup <- function(data, params){
 
   #browser()
 
-  x <- data$x_major + params$a_x * params$width * (data$x_minor - data$x_offset)
+  x <- data$x_major + params$width * (data$x_minor - data$x_offset)
   xend <- x
-  y <- data$y_major + params$a_y * params$height * (data$y_minor + data$y_offset)
-  yend <- data$y_major - params$a_y * params$height * (data$yend_minor - data$y_offset)
+  y <- data$y_major + params$height * (data$y_minor + data$y_offset)
+  yend <- data$y_major - params$height * (data$yend_minor - data$y_offset)
 
   data$x <- x
   data$xend <- xend
