@@ -9,8 +9,9 @@ geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
                                position = "identity", ..., x_major = NULL,
                                x_minor = NULL, y_major = NULL, y_minor = NULL,
                                yend_minor = NULL, width = 0.5,
-                               height = 2.1, show.legend = NA,
-                               inherit.aes = TRUE) {
+                               x_scale = identity, y_scale = identity,
+                               height = 2.1, global_scale = TRUE,
+                               show.legend = NA, inherit.aes = TRUE) {
   ggplot2::layer(
     data = data,
     mapping = mapping,
@@ -22,6 +23,9 @@ geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
     params = list(
       width = width,
       height = height,
+      global_scale = global_rescale,
+      x_scale = make_scale(x_scale),
+      y_scale = make_scale(y_scale),
       ...
     )
   )
@@ -49,11 +53,22 @@ GeomSegmentGlyph <- ggproto(
     linetype = 1,
     width = 0.5,
     height = 2,
-    alpha = 1
-
-  ),
+    alpha = 1,
+    global_rescale = TRUE,
+    x_scale = make_scale(identity),
+    y_scale = make_scale(identity)
+  )
 
 )
+
+#rescale01 <- function(x, xlim=NULL) {
+#  if (is.null(xlim)) {
+#    rng <- range(x, na.rm = TRUE)
+#  } else {
+#    rng <- xlim
+#  }
+#  (x - rng[1]) / (rng[2] - rng[1])
+#}
 
 
 glyph_data_setup <- function(data, params){
