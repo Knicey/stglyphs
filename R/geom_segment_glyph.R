@@ -73,19 +73,12 @@ rescale01x <- function(x, xlim=NULL) {
 }
 
 rescale11x <- function(x, xlim=NULL) {
-  if (is.null(xlim)) {
-    rng <- range(x, na.rm = TRUE)
-  } else {
-    rng <- xlim
-  }
-  #browser()
-  x = (x - rng[1]) / (rng[2] - rng[1])
+  x = 2 * (rescale01x(x) - 0.5)
   return(x)
 }
 
-
 #I need a special case for y because I have y and yend that need to be scaled
-#the same way for rescale01
+#the same way
 rescale01y <- function(y, yend, ylim=NULL) {
   if (is.null(ylim)) {
     rngy <- range(y, na.rm = TRUE)
@@ -114,9 +107,6 @@ rescale11y <- function(y, yend, ylim=NULL) {
   yend = rescale01x(yend) * -1
   return(list(y,yend))
 }
-
-
-
 
 is.rel <- function(x) inherits(x, "rel")
 
@@ -181,9 +171,18 @@ glyph_data_setup <- function(data, params){
     if (has_scale(params$x_scale)) {
       x_scale <- get_scale(params$x_scale)
       data <- data |>
-        group_by(x_major, y_major)
+        group_by(x_major, y_major) |>
         dplyr::mutate(
-          #x_minor = x_scale(x_minor)
+          x_minor = x_scale(x_minor)
+        )
+    }
+    if (has_scale(params$y_scale)) {
+      y_scale <- get_scale(params$y_scale)
+      data <- data |>
+        group_by(x_major, y_major) |>
+        dplyr::mutate(
+          y_minor = y_scale(y_minor, yend_minor)[[1]],
+          yend_minor = y_scale(y_minor, yend_minor)[[2]]
         )
     }
   }
@@ -199,7 +198,7 @@ glyph_data_setup <- function(data, params){
   data$y <- y
   data$yend <- yend
 
-  #browser()
+  browser()
 
   #return(data)
   #Find the largest y value above y_major and scale everything based on that being 1
