@@ -44,15 +44,23 @@ grouped <- stations |>
     avgmax = mean(tmax, na.rm = TRUE)
 )
 #TODO: Accommodate for xend aesthetic (required in geom_segment)
+````
+```{r example, eval = FALSE}
 ggplot(data = grouped) +
   geom_sf(data = mainland_us, color = "white") +
   ggthemes::theme_map() +
   geom_point(aes(x = long, y = lat)) +
-  geom_segment_glyph(aes(
+  geom_segment_glyph(
+    #x_scale = rescale11,
+    y_scale = rescale01y,
+    width = 0.5,
+    height = 3,
+    aes(
     x_major = long, 
     y_major = lat, 
     x_minor = month, 
     y_minor = avgmin, 
     yend_minor = avgmax)
     ) 
+
 ```
