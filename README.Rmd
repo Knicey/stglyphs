@@ -52,7 +52,8 @@ ggplot(data = grouped) +
   geom_point(aes(x = long, y = lat)) +
   geom_segment_glyph(
     #x_scale = rescale11,
-    y_scale = rescale01y,
+    y_scale = rescale11y,
+    global_rescale = TRUE,
     width = 0.5,
     height = 3,
     aes(

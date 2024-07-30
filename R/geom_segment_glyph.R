@@ -67,10 +67,22 @@ rescale01x <- function(x, xlim=NULL) {
   } else {
     rng <- xlim
   }
-  browser()
+  #browser()
   x = (x - rng[1]) / (rng[2] - rng[1])
   return(x)
 }
+
+rescale11x <- function(x, xlim=NULL) {
+  if (is.null(xlim)) {
+    rng <- range(x, na.rm = TRUE)
+  } else {
+    rng <- xlim
+  }
+  #browser()
+  x = (x - rng[1]) / (rng[2] - rng[1])
+  return(x)
+}
+
 
 #I need a special case for y because I have y and yend that need to be scaled
 #the same way for rescale01
@@ -88,6 +100,19 @@ rescale01y <- function(y, yend, ylim=NULL) {
   yend = (yend - ymin) / (ymax - ymin)
 
   return(list(y, yend))
+}
+
+rescale11y <- function(y, yend, ylim=NULL) {
+  if (is.null(ylim)) {
+    rngy <- range(y, na.rm = TRUE)
+    rngyend <- range(yend, na.rm = TRUE)
+  } else {
+    rng <- ylim
+  }
+  #The rescale01x function can be used here because y and yend are agnostic
+  y = rescale01x(y)
+  yend = rescale01x(yend) * -1
+  return(list(y,yend))
 }
 
 
@@ -133,25 +158,35 @@ glyph_data_setup <- function(data, params){
   # y1 = s_y + a_y * h * z1
   # y2 = s_y + a_y * h * z2
   # s_x and s_y are scaling factors
+  if (params$global_rescale == TRUE) {
 
-  if (has_scale(params$x_scale)) {
-    x_scale <- get_scale(params$x_scale)
-    data <-
-      data |>
-      dplyr::mutate(
-        x_minor = x_scale(.data$x_minor)
-      )
+    if (has_scale(params$x_scale)) {
+      x_scale <- get_scale(params$x_scale)
+      data <- data |>
+        dplyr::mutate(
+          x_minor = x_scale(.data$x_minor)
+        )
+    }
+
+    if (has_scale(params$y_scale)) {
+      y_scale <- get_scale(params$y_scale)
+
+      #Use the same function for both y and yend and produces a list of 2 vectors
+      y_res <- y_scale(data$y_minor, data$yend_minor)
+      data$y_minor <- y_res[[1]]
+      data$yend_minor <- y_res[[2]]
+    }
+
+  } else {
+    if (has_scale(params$x_scale)) {
+      x_scale <- get_scale(params$x_scale)
+      data <- data |>
+        group_by(x_major, y_major)
+        dplyr::mutate(
+          #x_minor = x_scale(x_minor)
+        )
+    }
   }
-
-  if (has_scale(params$y_scale)) {
-    y_scale <- get_scale(params$y_scale)
-
-    #Use the same function for both y and yend and produces a list of 2 vectors
-    y_res <- y_scale(data$y_minor, data$yend_minor)
-    data$y_minor <- y_res[[1]]
-    data$yend_minor <- y_res[[2]]
-  }
-
   #browser()
 
   x <- data$x_major + params$width * data$x_minor
