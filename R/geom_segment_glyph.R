@@ -96,12 +96,6 @@ rescale01y <- function(y, yend, ylim=NULL) {
 }
 
 rescale11y <- function(y, yend, ylim=NULL) {
-  if (is.null(ylim)) {
-    rngy <- range(y, na.rm = TRUE)
-    rngyend <- range(yend, na.rm = TRUE)
-  } else {
-    rng <- ylim
-  }
   #The rescale01x function can be used here because y and yend are agnostic
   y = rescale01x(y)
   yend = rescale01x(yend) * -1
@@ -186,7 +180,6 @@ glyph_data_setup <- function(data, params){
         )
     }
   }
-  #browser()
 
   x <- data$x_major + params$width * data$x_minor
   xend <- x
@@ -198,31 +191,12 @@ glyph_data_setup <- function(data, params){
   data$y <- y
   data$yend <- yend
 
-  browser()
-
-  #return(data)
-  #Find the largest y value above y_major and scale everything based on that being 1
-
-  #data <- data |>
-  #  group_by(x_major, y_major) |>
-  #  mutate(
-  #    scale_factor = max(y) - y_major
-  #  ) |>
-  #  ungroup() |>
-  #  mutate(
-  #    y = ((y - y_major)/scale_factor) + y_major,
-  #    yend = y_major + ((y_major - yend)/scale_factor),
-  #  )
-
-  #browser()
-
   datetime_class <- c(
     "Date", "yearmonth", "yearweek", "yearquarter","POSIXct", "POSIXlt")
   if (any(class(data$x_minor) %in% datetime_class)){
     data[["x_minor"]] <- as.numeric(data[["x_minor"]])
   }
 
-  #print(data)
   return(data)
 
 
