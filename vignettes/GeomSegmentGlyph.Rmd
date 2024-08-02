@@ -17,6 +17,8 @@ knitr::opts_chunk$set(
 
 ```{r setup}
 library(stglpyhs)
+library(dplyr)
+library(ggplot2)
 ```
 
 # GeomSegmentGlyph
@@ -90,7 +92,7 @@ ggplot(data = grouped) +
   geom_point(aes(x = long, y = lat)) +
   geom_segment_glyph(
     x_scale = rescale11x,
-    y_scale = rescale11y,
+    y_scale = rescale01y,
     width = 2,
     height = 3,
     aes(
@@ -111,7 +113,7 @@ ggplot(data = grouped) +
   geom_point(aes(x = long, y = lat)) +
   geom_segment_glyph(
     x_scale = rescale11x,
-    y_scale = rescale11y,
+    y_scale = rescale01y,
     global_rescale = FALSE,
     width = 2,
     height = 3,

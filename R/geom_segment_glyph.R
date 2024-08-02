@@ -95,11 +95,11 @@ rescale01y <- function(y, yend, ylim=NULL) {
   return(list(y, yend))
 }
 
-rescale11y <- function(y, yend, ylim=NULL) {
-  #The rescale01x function can be used here because y and yend are agnostic
-  y = rescale01x(y)
-  yend = rescale01x(yend) * -1
-  return(list(y,yend))
+rescale11y <- function(y, yend, xlim=NULL) {
+  newy = 2 * (rescale01y(y, yend)[[1]] - 0.5)
+  newyend = 2 * (rescale01y(y, yend)[[2]] - 0.5)
+
+  return(list(newy, newyend))
 }
 
 is.rel <- function(x) inherits(x, "rel")

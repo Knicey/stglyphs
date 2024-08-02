@@ -34,7 +34,7 @@ devtools::install_github("Knicey/stglyphs")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example, eval = FALSE}
+```{r example}
 library(stglpyhs)
 
 grouped <- stations |>
@@ -42,10 +42,11 @@ grouped <- stations |>
   summarise(
     avgmin = mean(tmin, na.rm = TRUE),
     avgmax = mean(tmax, na.rm = TRUE)
-)
+  ) |>
+  ungroup()
 #TODO: Accommodate for xend aesthetic (required in geom_segment)
-````
-```{r example, eval = FALSE}
+```
+```{r example}
 ggplot(data = grouped) +
   geom_sf(data = mainland_us, color = "white") +
   ggthemes::theme_map() +
