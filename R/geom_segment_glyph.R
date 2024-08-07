@@ -1,10 +1,25 @@
+#' @inheritParams cubble::geom_glyph
 #' @import ggplot2
-#' @import dplyr
+#' @import From dplyr mutate
+
+#' @param x_major,x_minor,y_major,y_minor,xend_minor,yend_minor The name of the
+#' variable (as a string) for the major and minor x and y axes. \code{x_major}
+#' and \code{y_major} specify a longitude and latitude on a map while
+#' \code{x_minor}, \code{y_minor}, \code{xend_minor}, and \code{yend_minor}
+#' provide the structure for glyph.
+#' @param height,width The height and width of each glyph.
+#' @param y_scale,x_scale The scaling function to be applied to each set of
+#'  minor values within a grid cell. The default is \code{\link{identity}} which
+#'  produces a result without scaling.
+#' @param global_rescale Determines whether or not the rescaling is performed
+#' globally or separately for each individual glyph.
 #' @export
 
 #' @title GeomSegmentGlyph
-#' @return description
+#' @return a ggplot object
 
+#' @export
+#' @rdname glyph
 geom_segment_glyph <- function(mapping = NULL, data = NULL, stat = "identity",
                                position = "identity", ..., x_major = NULL,
                                x_minor = NULL, y_major = NULL, y_minor = NULL,
@@ -58,7 +73,6 @@ GeomSegmentGlyph <- ggproto(
     x_scale = make_scale(identity),
     y_scale = make_scale(identity)
   )
-
 )
 
 rescale01x <- function(x, xlim=NULL) {
