@@ -19,7 +19,7 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of stglpyhs is to ...
+The goal of stglpyhs is to introduce new ways of visualizing spatio-temporal data and in particular analyzing across multivariate seasonal data. The existing cubble package implements glyph maps in the form of line graphs. This project seeks to expand this functionality to segment plots to visualize multivariable data better and analyze seasonal trends.
 
 ## Installation
 
@@ -34,8 +34,10 @@ devtools::install_github("Knicey/stglyphs")
 
 This is a basic example which shows you how to solve a common problem:
 
-```{r example}
+```{r data prep}
 library(stglpyhs)
+library(dplyr)
+library(ggplot2)
 
 grouped <- stations |>
   group_by(month, name, long, lat) |>
