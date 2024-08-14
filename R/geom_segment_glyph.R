@@ -1,6 +1,7 @@
-#' @inheritParams cubble::geom_glyph
+#' Create a segment plot glyph in ggplot2
+
 #' @import ggplot2
-#' @import From dplyr mutate
+#' @importFrom dplyr mutate
 
 #' @param x_major,x_minor,y_major,y_minor,xend_minor,yend_minor The name of the
 #' variable (as a string) for the major and minor x and y axes. \code{x_major}

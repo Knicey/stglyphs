@@ -25,6 +25,7 @@ stations
 \description{
 A subset of data from NOAA weather stations in the United States.
 Selected stations include: MIAMI BEACH, MT LECONTE, RALEIGH AP,
-KANSAS CITY INTL AP, MCCARRAN INTL AP, CHEYENNE, and SEATTLE TACOMA AP
+KANSAS CITY INTL AP, MCCARRAN INTL AP, CHEYENNE, NY CITY CNTRL PARK
+SANTA MONICA MUNI AP and SEATTLE TACOMA AP
 }
 \keyword{datasets}

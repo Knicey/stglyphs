@@ -2,3 +2,11 @@ url: ~
 template:
   bootstrap: 5
 
+- title: "Main Functions"
+- contents:
+  - "geom_segment_glyph"
+
+- title: "Built-in data"
+- contents:
+  - stations
+  - flights
