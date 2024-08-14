@@ -1,6 +1,6 @@
 ---
 title: "GeomSegmentGlyph"
-author: "Vignette Author"
+author: "Nathan Yang"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{GeomSegmentGlyph}

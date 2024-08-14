@@ -57,8 +57,8 @@ GeomSegmentGlyph <- ggproto(
   },
 
   draw_panel = function(data, panel_params, coord, ...) {
-    print("Data in draw_panel:")
-    print(data)
+    #print("Data in draw_panel:")
+    #print(data)
     ggplot2:::GeomSegment$draw_panel(data, panel_params, coord, ...)
   },
 

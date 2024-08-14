@@ -3,7 +3,7 @@ pkgdown: 2.0.9
 pkgdown_sha: ~
 articles:
   GeomSegmentGlyph: GeomSegmentGlyph.html
-last_built: 2024-08-14T22:08Z
+last_built: 2024-08-14T22:25Z
 urls:
   reference: https://knicey.github.io/stglyphs/reference
   article: https://knicey.github.io/stglyphs/articles

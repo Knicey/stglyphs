@@ -1,6 +1,7 @@
 test_that("geom_segment_glyph and rescaling work", {
   skip_if_not_installed("vdiffr")
   library(ggplot2)
+  library(dplyr)
 
   grouped <- stations |>
     group_by(month, name, long, lat) |>
