@@ -76,6 +76,8 @@ GeomSegmentGlyph <- ggproto(
   )
 )
 
+
+#' @export
 rescale01x <- function(x, xlim=NULL) {
   if (is.null(xlim)) {
     rng <- range(x, na.rm = TRUE)
@@ -87,6 +89,7 @@ rescale01x <- function(x, xlim=NULL) {
   return(x)
 }
 
+#' @export
 rescale11x <- function(x, xlim=NULL) {
   x = 2 * (rescale01x(x) - 0.5)
   return(x)
@@ -94,6 +97,7 @@ rescale11x <- function(x, xlim=NULL) {
 
 #I need a special case for y because I have y and yend that need to be scaled
 #the same way
+#' @export
 rescale01y <- function(y, yend, ylim=NULL) {
   if (is.null(ylim)) {
     rngy <- range(y, na.rm = TRUE)
@@ -110,6 +114,7 @@ rescale01y <- function(y, yend, ylim=NULL) {
   return(list(y, yend))
 }
 
+#' @export
 rescale11y <- function(y, yend, xlim=NULL) {
   newy = 2 * (rescale01y(y, yend)[[1]] - 0.5)
   newyend = 2 * (rescale01y(y, yend)[[2]] - 0.5)
