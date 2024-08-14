@@ -46,7 +46,7 @@ grouped <- stations |>
     avgmin = mean(tmin, na.rm = TRUE),
     avgmax = mean(tmax, na.rm = TRUE)
   ) |>
-  ungroup()
+  ungroup() 
 #TODO: Accommodate for xend aesthetic (required in geom_segment)
 ```
 ```{r example}
