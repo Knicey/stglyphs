@@ -8,3 +8,4 @@
 ^data-raw$
 ^\.github$
 ^codecov\.yml$
+^kaggle\.json$

@@ -2,7 +2,24 @@ library(jsonlite)
 library(readr)
 library(tidyverse)
 library(httr)
-library(airports)
+
+flights_by_monthyear <- flights_data_raw |>
+  filter(ORIGIN %in% sample_airports) |>
+  mutate(
+    month = month(FL_DATE),
+    year = year(FL_DATE)
+  ) |>
+  group_by(ORIGIN, month, year) |>
+  summarise(
+    total_flights = n()
+  )
+
+flights_by_month <- flights_by_monthyear |>
+  group_by(ORIGIN, month) |>
+  summarise(
+    max = max(total_flights),
+    min = min(total_flights),
+  )
 
 #Requires a kaggle account and API key
 
@@ -34,37 +51,36 @@ if (response$status_code == 200) {
   stop("Failed to download the dataset. Status code: ", response$status_code)
 }
 
-top_100_airports <- flights_data_raw |>
+top_10_airports <- flights_data_raw |>
   group_by(ORIGIN) |>
   summarise(
     total_flights = n()
   ) |>
   ungroup() |>
   arrange(desc(total_flights)) |>
-  head(100)
+  head(10)
 
-sample_airports <- sample(top_100_airports$ORIGIN, 10)
+sample_airports <- top_10_airports$ORIGIN
 
-flights_by_monthyear <- flights_data_raw |>
-  filter(ORIGIN %in% sample_airports) |>
-  mutate(
-    month = month(FL_DATE),
-    year = year(FL_DATE)
-  ) |>
-  group_by(ORIGIN, month, year) |>
-  summarise(
-    total_flights = n()
-  )
+sample_flights <- flights_data_raw |>
+  filter(ORIGIN %in% sample_airports)
 
-flights_by_month <- flights_by_monthyear |>
-  group_by(ORIGIN, month) |>
-  summarise(
-    max = max(total_flights),
-    min = min(total_flights),
-  )
+base_url = "https://data.opendatasoft.com/api/explore/v2.1/catalog/datasets/airports-code@public/records?"
+or_clause = "%20or%20"
 
-flights <- left_join(flights_by_month, usairports,
-  by = c("ORIGIN" = "location_id")) |>
-  select(ORIGIN, month, max, min, facility_name, arp_latitude, arp_longitude)
+for (i in 1:length(sample_airports)) {
+  if (i == 1) {
+    extension = paste0("where=column_1%20%3D%20%22", sample_airports[i], "%22")
+  } else {
+    extension = paste0(extension, or_clause, "column_1%20%3D%20%22", sample_airports[i], "%22")
+  }
+}
+
+airport_coordinates = fromJSON(rawToChar(GET(paste0(base_url, extension))$content))$result |>
+  select(column_1, airport_name, latitude, longitude) |>
+  rename(code = column_1)
+
+flights <- left_join(sample_flights, airport_coordinates,
+  by = c("ORIGIN" = "code"))
 
 usethis::use_data(flights, overwrite = TRUE)

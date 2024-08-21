@@ -1,12 +1,13 @@
 #' Create a segment plot glyph in ggplot2
 
 #' @import ggplot2
-#' @importFrom dplyr mutate
+#' @importFrom dplyr mutate group_by
 
-#' @param x_major,x_minor,y_major,y_minor,xend_minor,yend_minor The name of the
+#' @inheritParams ggplot2::geom_segment
+#' @param x_major,x_minor,y_major,y_minor,yend_minor The name of the
 #' variable (as a string) for the major and minor x and y axes. \code{x_major}
 #' and \code{y_major} specify a longitude and latitude on a map while
-#' \code{x_minor}, \code{y_minor}, \code{xend_minor}, and \code{yend_minor}
+#' \code{x_minor}, \code{y_minor}, and \code{yend_minor}
 #' provide the structure for glyph.
 #' @param height,width The height and width of each glyph.
 #' @param y_scale,x_scale The scaling function to be applied to each set of
@@ -222,3 +223,4 @@ glyph_data_setup <- function(data, params){
 
 }
 
+globalVariables(c('x_major', 'x_minor', 'y_major', 'y_minor', 'yend_minor'))
