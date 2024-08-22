@@ -77,6 +77,12 @@ GeomSegmentGlyph <- ggproto(
   )
 )
 
+#' Rescale x-axis to 0,1
+#' @param x The input array to be rescaled
+#' @param xlim The limit of the rescaling. If NULL, the range of x is used.
+
+#' @title rescale01x
+#' @return A rescaled array based on the input array and provided limit that provides values between 0 and 1
 
 #' @export
 rescale01x <- function(x, xlim=NULL) {
@@ -90,14 +96,28 @@ rescale01x <- function(x, xlim=NULL) {
   return(x)
 }
 
+
+#' Rescale x-axis to -1,1
+#' @param x The input array to be rescaled
+#' @param xlim The limit of the rescaling. If NULL, the range of x is used.
+
+#' @title rescale11x
+#' @return A rescaled array based on the input array and provided limit that provides values between -1 and 1
+
 #' @export
 rescale11x <- function(x, xlim=NULL) {
-  x = 2 * (rescale01x(x) - 0.5)
+  x = 2 * (rescale01x(x, xlim) - 0.5)
   return(x)
 }
 
-#I need a special case for y because I have y and yend that need to be scaled
-#the same way
+#' Rescale y-axis to 0,1
+#' This rescaling works differently to x rescaling because y and y end need to be rescaled together
+#' @param y,yend The input arrays to be rescaled
+#' @param ylim The limit of the rescaling. If NULL, the maximum value from y and yend is used.
+
+#' @title rescale01y
+#' @return A list of two rescaled arrays based on the input array and provided limit that provides values between 0 and 1
+
 #' @export
 rescale01y <- function(y, yend, ylim=NULL) {
   if (is.null(ylim)) {
@@ -115,10 +135,18 @@ rescale01y <- function(y, yend, ylim=NULL) {
   return(list(y, yend))
 }
 
+#' Rescale y-axis to -1,1
+#' This rescaling works differently to x rescaling because y and y end need to be rescaled together
+#' @param y,yend The input arrays to be rescaled
+#' @param ylim The limit of the rescaling. If NULL, the maximum value from y and yend is used.
+#'
+#' @title rescale11y
+#' @return A list of two rescaled arrays based on the input array and provided limit that provides values between -1 and 1
+#'
 #' @export
-rescale11y <- function(y, yend, xlim=NULL) {
-  newy = 2 * (rescale01y(y, yend)[[1]] - 0.5)
-  newyend = 2 * (rescale01y(y, yend)[[2]] - 0.5)
+rescale11y <- function(y, yend, ylim=NULL) {
+  newy = 2 * (rescale01y(y, yend, ylim)[[1]] - 0.5)
+  newyend = 2 * (rescale01y(y, yend, ylim)[[2]] - 0.5)
 
   return(list(newy, newyend))
 }

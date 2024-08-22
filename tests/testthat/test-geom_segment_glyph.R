@@ -14,7 +14,7 @@ test_that("geom_segment_glyph and rescaling work", {
   p <- ggplot(data = grouped) +
     geom_sf(data = mainland_us, color = "white") +
     ggthemes::theme_map() +
-    geom_point(aes(x = long, y = lat))
+    geom_point(size = 1, aes(x = long, y = lat))
 
   p1 <- p + geom_segment_glyph(
     width = 0.4,

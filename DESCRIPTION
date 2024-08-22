@@ -25,3 +25,4 @@ Depends:
 LazyData: true
 VignetteBuilder: knitr
 URL: https://knicey.github.io/stglyphs/
+LazyDataCompression:xz
