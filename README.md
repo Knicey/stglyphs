@@ -1,27 +1,18 @@
-
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 # stglpyhs
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml)
-[![Codecov test
-coverage](https://codecov.io/gh/Knicey/stglyphs/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Knicey/stglyphs?branch=master)
+[![R-CMD-check](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Knicey/stglyphs/actions/workflows/R-CMD-check.yaml) [![Codecov test coverage](https://codecov.io/gh/Knicey/stglyphs/branch/master/graph/badge.svg)](https://app.codecov.io/gh/Knicey/stglyphs?branch=master)
 
 <!-- badges: end -->
 
-The goal of stglpyhs is to introduce new ways of visualizing
-spatio-temporal data and in particular analyzing across multivariate
-seasonal data. The existing cubble package implements glyph maps in the
-form of line graphs. This project seeks to expand this functionality to
-segment plots to visualize multivariable data better and analyze
-seasonal trends.
+The goal of stglpyhs is to introduce new ways of visualizing spatio-temporal data and in particular analyzing across multivariate seasonal data. The existing cubble package implements glyph maps in the form of line graphs. This project seeks to expand this functionality to segment plots to visualize multivariable data better and analyze seasonal trends.
 
 ## Installation
 
-You can install the development version of stglpyhs from
-[GitHub](https://github.com/) with:
+You can install the development version of stglpyhs from [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
@@ -30,38 +21,19 @@ devtools::install_github("Knicey/stglyphs")
 
 ## Example
 
-This is an example which displays seasonal mins and maxes in temperature
-from NOAA across the US:
+This is an example which displays seasonal mins and maxes in temperature from NOAA across the US:
 
 ``` r
 library(stglpyhs)
-library(dplyr)
-#> 
-#> Attaching package: 'dplyr'
-#> The following objects are masked from 'package:stats':
-#> 
-#>     filter, lag
-#> The following objects are masked from 'package:base':
-#> 
-#>     intersect, setdiff, setequal, union
 library(ggplot2)
-library(lubridate)
-#> 
-#> Attaching package: 'lubridate'
-#> The following objects are masked from 'package:base':
-#> 
-#>     date, intersect, setdiff, union
+library(dplyr, warn.conflicts = FALSE)
 
 stations_grouped <- stations |>
   group_by(month, name, long, lat) |>
   summarise(
     avgmin = mean(tmin, na.rm = TRUE),
     avgmax = mean(tmax, na.rm = TRUE)
-  ) |>
-  ungroup() 
-#> `summarise()` has grouped output by 'month', 'name', 'long'. You can override
-#> using the `.groups` argument.
-#TODO: Accommodate for xend aesthetic (required in geom_segment)
+  ) 
 ```
 
 ``` r
@@ -82,16 +54,14 @@ ggplot(data = stations_grouped) +
     y_minor = avgmin, 
     yend_minor = avgmax)
     ) 
-#> Warning: Unknown or uninitialised column: `linewidth`.
-#> Warning: Unknown or uninitialised column: `size`.
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-2-1.png" width="100%"/>
 
-This is another example that shows flight cancellations from the
-airports that have the most flight cancellations:
+This is another example that shows flight cancellations from the airports that have the most flight cancellations:
 
 ``` r
+library(lubridate, warn.conflicts = FALSE)
 flights_grouped <- flights |>
   mutate(
     month = month(FL_DATE),
@@ -106,10 +76,6 @@ flights_grouped <- flights |>
     max = max(total_flights),
     min = min(total_flights),
   )
-#> `summarise()` has grouped output by 'ORIGIN', 'month', 'year', 'longitude'. You
-#> can override using the `.groups` argument.
-#> `summarise()` has grouped output by 'ORIGIN', 'month', 'longitude'. You can
-#> override using the `.groups` argument.
 ```
 
 ``` r
@@ -130,8 +96,6 @@ ggplot(data = flights_grouped) +
     y_minor = min, 
     yend_minor = max)
     ) 
-#> Warning: Unknown or uninitialised column: `linewidth`.
-#> Warning: Unknown or uninitialised column: `size`.
 ```
 
-<img src="man/figures/README-unnamed-chunk-3-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-4-1.png" width="100%"/>

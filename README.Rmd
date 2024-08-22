@@ -4,12 +4,15 @@ output: github_document
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-```{r, include = FALSE}
+```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  #echo = FALSE,
+  warning = FALSE, 
+  message = FALSE
 ) 
 ```
 
@@ -36,23 +39,20 @@ devtools::install_github("Knicey/stglyphs")
 
 This is an example which displays seasonal mins and maxes in temperature from NOAA across the US:
 
-```{r data prep}
+```{r}
 library(stglpyhs)
-library(dplyr)
 library(ggplot2)
-library(lubridate)
+library(dplyr, warn.conflicts = FALSE)
 
 stations_grouped <- stations |>
   group_by(month, name, long, lat) |>
   summarise(
     avgmin = mean(tmin, na.rm = TRUE),
     avgmax = mean(tmax, na.rm = TRUE)
-  ) |>
-  ungroup() 
-#TODO: Accommodate for xend aesthetic (required in geom_segment)
+  ) 
 ```
 
-```{r example}
+```{r}
 ggplot(data = stations_grouped) +
   geom_sf(data = mainland_us, color = "white") +
   ggthemes::theme_map() +
@@ -76,6 +76,7 @@ ggplot(data = stations_grouped) +
 This is another example that shows flight cancellations from the airports that have the most flight cancellations:
 
 ```{r}
+library(lubridate, warn.conflicts = FALSE)
 flights_grouped <- flights |>
   mutate(
     month = month(FL_DATE),

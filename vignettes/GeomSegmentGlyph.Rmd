@@ -85,14 +85,14 @@ ggplot(data = grouped) +
 
 Furthermore, there are options for y-scaling that include centering the glyph vertically on the station location.
 
-```{r}
+```{r, echo = FALSE}
 ggplot(data = grouped) +
   geom_sf(data = mainland_us, color = "white") +
   ggthemes::theme_map() +
   geom_point(aes(x = long, y = lat)) +
   geom_segment_glyph(
     x_scale = rescale11x,
-    y_scale = rescale01y,
+    y_scale = rescale11y,
     width = 2,
     height = 3,
     aes(
@@ -106,7 +106,8 @@ ggplot(data = grouped) +
 
 These rescaling past examples have all been made with global rescaling enabled (default) which results in the glyphs being differently sized according to their values relative to each other. Turning off global rescaling allows all glpyhs to rescale within their own individual values and produce glyphs that sized more evenly.
 
-```{r}
+```{r, warning=FALSE}
+
 ggplot(data = grouped) +
   geom_sf(data = mainland_us, color = "white") +
   ggthemes::theme_map() +
