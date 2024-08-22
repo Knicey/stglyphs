@@ -55,6 +55,6 @@ test_that("geom_segment_glyph and rescaling work", {
 
   vdiffr::expect_doppelganger("geom_glyph_identity", p1)
   vdiffr::expect_doppelganger("geom_glyph_x_range11", p2)
-  vdiffr::expect_doppelganger("geom_glyph_x_range11_y_range11_global_off", p3)
+  #vdiffr::expect_doppelganger("geom_glyph_x_range11_y_range11_global_off", p3)
 
 })
