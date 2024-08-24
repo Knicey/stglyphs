@@ -1,0 +1,47 @@
+## My GSoC 2024 Project
+
+Nathan Yang
+
+8/23/2024
+
+## Introduction 
+
+Glyph maps offer a novel way to visualize spatio-temporal data on a map. Single curve or line plot glpyhs as implemented in the [cubble](https://github.com/huizezhang-sherry/cubble) package can offer unique insights into both seasonal and geographic trends of a single variable across different datasets. My project was set to extend ggplot to include more unique types of glyphs that would expand the options for multivariate spatio-temporal visualization.
+
+## Preliminary Work
+
+I had research a lot of background information about general R package development, writing an extension to ggplot2, as well as the fundamental linear algebra behind displaying glyphs on a map.
+
+Here are the primary resources I used throughout the project to guide construction of the syglyphs package.
+
+-   [ggproto objects](https://ggplot2.tidyverse.org/reference/ggproto.html)
+
+-   [Extending ggplot2](https://ggplot2-book.org/extensions)
+
+-   [r-pkgs](https://r-pkgs.org/whole-game.html)
+
+-   [cubble](https://github.com/huizezhang-sherry/cubble)
+
+-   [Glyph-maps for visually exploring temporal patterns in climate data and models](https://onlinelibrary.wiley.com/doi/10.1002/env.2152)
+
+## Final Submission
+
+The primary goals of my project were to develop extensions for ggplot2 that implemented different kinds of glyphs as well as create detailed tests, documentation, and vignettes for my code.
+
+The package I created successfully implements geom_segment_glyph which adds line segment plots as a new glyph option for mapping. This geom was tested with two different datasets that are also included in this package. The `stations` dataset is a compilation of weather data from 10 different weather stations across the US. The `flights` dataset is a list of canceled flights than originated from the top 10 airports wit the most canceled flights.
+
+Additionally rescaling functions for geom_segment_glyph (and future glyphs) were also created and documented in this package.
+
+## Future Plans
+
+I plan to work with my mentors through a merger with another similar project. Additionally, there are various aesthetics and parameters that still need to be ironed out for geom_segment_glyph. There will also always be more glyphs to be created!
+
+## Reflection
+
+I would like to thank my mentors Sherry Zhang and Dianne Cook for their incredible and thoughtful guidance throughout this project. With their support, I was able to make steady progress on this project week by week and gather feedback/suggestions for future development.
+
+There is still a lot of work to be done and different glyph ideas to explore and flesh out, but I am really happy with the work I have put in and the current functionality of the stglyphs package.
+
+Lastly, thank you to Google for organizing and funding this project as part of Google Summer of Code.
+
+Repo Link: <https://github.com/Knicey/stglyphs>
