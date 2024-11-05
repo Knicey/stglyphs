@@ -26,6 +26,12 @@ knitr::opts_chunk$set(
 
 The goal of stglpyhs is to introduce new ways of visualizing spatio-temporal data and in particular analyzing across multivariate seasonal data. The existing cubble package implements glyph maps in the form of line graphs. This project seeks to expand this functionality to segment plots to visualize multivariable data better and analyze seasonal trends.
 
+## Important Note!!!
+
+This project has been merged and is now being maintained as `sugarglider`
+
+You can find the new project repository here: <https://github.com/maliny12/sugarglider>
+
 ## Installation
 
 You can install the development version of stglpyhs from [GitHub](https://github.com/) with:
